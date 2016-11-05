@@ -8,4 +8,5 @@
     <string name="Exception.Login.UsuarioJaLogado">Usuário já logado|Já existe uma sessão de Usuário iniciada, por favor reinicie o aplicativo.</string>
     <string name="title_activity_main_screen">MainScreenActivity</string>
     <string name="imagem_do_evento">Imagem do evento</string>
+    <string name="nenhum_role_encontrado">Nenhum Rolê encontrado!</string>
 </resources>

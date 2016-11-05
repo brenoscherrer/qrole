@@ -32,6 +32,7 @@ public class MainScreenActivity extends AppCompatActivity implements SearchView.
 
 
         ListView listView = (ListView) findViewById(R.id.list_role);
+        listView.setEmptyView(findViewById(R.id.empty_view_role));
 
         roleAdapter = new RoleAdapter(this, buildSomeFakeRoles());
 

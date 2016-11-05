@@ -7,7 +7,15 @@
     <ListView
         android:id="@+id/list_role"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/empty_view_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/nenhum_role_encontrado"
+        android:paddingTop="6dp"
+        android:textSize="16sp" />
 
 </LinearLayout>
