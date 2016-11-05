@@ -1,21 +1,13 @@
-package br.com.qrole.main.activities;
+package br.com.qrole.main.view.activities;
 
-import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.IOException;
 
 import br.com.qrole.main.R;
 import br.com.qrole.main.controller.LoginController;
@@ -45,6 +37,15 @@ public class LoginActivity extends AppCompatActivity {
         init();
     }
 
+    @Override
+    protected void onResume() {
+        if (LoginController.IS_USER_LOGGED_IN) {
+            showMainScreen();
+        }
+
+        super.onResume();
+    }
+
     private void init() {
         TextView textLogin = (TextView) findViewById(R.id.textLogin);
 
@@ -60,12 +61,17 @@ public class LoginActivity extends AppCompatActivity {
         if (!LoginController.IS_USER_LOGGED_IN) {
             Intent intent = AccountManager.newChooseAccountIntent(null, null, new String[]{
                     "com.google"}, null, null, null, null);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
             startActivityForResult(intent, REQUEST_PICK_ACCOUNT);
         }
     }
 
-    private void showMainScreen(){
+    private void showMainScreen() {
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -80,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         Toast.makeText(this, "Login efetuado com sucesso! Aguarde...",
                                 Toast.LENGTH_LONG).show();
+
+                        showMainScreen();
                     } catch (Exception ex) {
                         DefaultExceptionHandler.handleException(ex, this);
                     }

@@ -2,7 +2,7 @@ package br.com.qrole.main.resources;
 
 import java.io.Serializable;
 
-import br.com.qrole.main.activities.LoginActivity;
+import br.com.qrole.main.view.activities.LoginActivity;
 import br.com.qrole.main.utilities.StringUtilities;
 
 /**
