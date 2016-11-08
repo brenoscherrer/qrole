@@ -9,4 +9,10 @@
     <string name="title_activity_main_screen">MainScreenActivity</string>
     <string name="imagem_do_evento">Imagem do evento</string>
     <string name="nenhum_role_encontrado">Nenhum Rolê encontrado!</string>
+    <string name="imagem_do_role">Imagem do Role</string>
+
+    <!-- Activity 'RoleViewer -->
+    <string name="textViewRoleDateTime">Data do Rolê</string>
+    <string name="textViewAddress">Endereço</string>
+    <string name="textViewDescription">Descrição</string>
 </resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".view.activities.RoleViewerActivity">
+
+    <ImageView
+        android:id="@+id/imageRole"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/textRoleTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageRole"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="4dp"
+        android:layout_toEndOf="@+id/imageRole"
+        android:ellipsize="end"
+        android:minLines="3"
+        android:text="Rolê Title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageRole"
+        android:layout_marginTop="5dp"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/labelViewRoleDate"
+                style="@style/TitleTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/textViewRoleDateTime" />
+
+            <TextView
+                android:id="@+id/textRoleDate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/labelViewRoleDate"
+                android:layout_marginLeft="15dp"
+                android:text="Data do Rolê" />
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/labelViewRoleDate" />
+
+            <TextView
+                android:id="@+id/labelViewAddress"
+                style="@style/TitleTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textRoleDate"
+                android:text="@string/textViewAddress" />
+
+            <TextView
+                android:id="@+id/textAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/labelViewAddress"
+                android:layout_marginLeft="15dp"
+                android:text="Endereço" />
+
+            <TextView
+                android:id="@+id/labelViewDescription"
+                style="@style/TitleTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textAddress"
+                android:text="@string/textViewDescription" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textAddress" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/labelViewDescription"
+                android:layout_marginLeft="15dp"
+                android:text="Descrição" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

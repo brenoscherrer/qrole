@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.MainScreenActivity"></activity>
+        <activity android:name=".view.activities.MainScreenActivity" />
+        <activity android:name=".view.activities.RoleViewerActivity" />
     </application>
 
 </manifest>

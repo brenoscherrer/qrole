@@ -17,6 +17,7 @@ import br.com.qrole.main.R;
 import br.com.qrole.main.entities.Role;
 import br.com.qrole.main.utilities.BitmapUtilities;
 import br.com.qrole.main.utilities.StringUtilities;
+import br.com.qrole.main.view.activities.LoginActivity;
 
 /**
  * Role Adapter to fill the content of the List Item.
@@ -39,9 +40,13 @@ public class RoleAdapter extends ArrayAdapter<Role> {
             view = LayoutInflater.from(context).inflate(R.layout.item_list_role, null);
         }
 
+        ImageView imageViewImage = (ImageView) view.findViewById(R.id.image_view_role);
         if (!StringUtilities.isBlank(role.getImage())) {
-            ImageView imageViewImage = (ImageView) view.findViewById(R.id.image_view_role);
             imageViewImage.setImageBitmap(BitmapUtilities.getBitmapFromBase64String(role.getImage()));
+        } else {
+            // Exibo a imagem de "sem imagem"
+            imageViewImage.setImageDrawable(context.getResources().getDrawable(R.drawable.noimage,
+                    null));
         }
 
         TextView textViewTitle = (TextView) view.findViewById(R.id.text_view_role_title);
