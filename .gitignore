@@ -1,0 +1,10 @@
+.DS_Store
+.gradle/
+.idea/
+app/.DS_Store
+app/app.iml
+gradle.properties
+gradle/
+gradlew
+gradlew.bat
+qrole.iml

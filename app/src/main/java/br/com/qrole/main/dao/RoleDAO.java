@@ -41,7 +41,7 @@ public class RoleDAO implements AbstractEntityDAO<Role> {
 
         List<Role> roles = new ArrayList<>();
 
-        for (Role r : buildSomeFakeRoles()) {
+        for (Role r : findAllEntities()) {
             if (r.getDescription().toUpperCase().contains(query.toUpperCase())
                     || r.getTitle().toUpperCase().contains(query.toUpperCase())) {
                 roles.add(r);
