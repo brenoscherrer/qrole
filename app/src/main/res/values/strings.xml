@@ -16,4 +16,10 @@
     <string name="textViewAddress">Endereço</string>
     <string name="textViewDescription">Descrição</string>
     <string name="confirmar_presenca">Confirmar Presença</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
