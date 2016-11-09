@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Q-Role</string>
 
+    <string name="description">Aplicativo para a busca de entretenimentos nas proximidades, como bares, festas, eventos teatrais e outros.</string>
+
     <string name="login">Clique para efetuar o Login</string>
     <string name="hint_search">Busque por um Rolê…</string>
 
@@ -16,7 +18,9 @@
     <string name="textViewAddress">Endereço</string>
     <string name="textViewDescription">Descrição</string>
     <string name="confirmar_presenca">Confirmar Presença</string>
-    <string name="title_activity_main">MainActivity</string>
+
+    <!-- MainActivity -->
+    <string name="title_activity_main">Menu Principal</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
