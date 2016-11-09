@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.qrole.main.R;
+import br.com.qrole.main.dao.RoleDAO;
 import br.com.qrole.main.entities.Role;
 import br.com.qrole.main.utilities.BitmapUtilities;
 import br.com.qrole.main.utilities.StringUtilities;
@@ -60,20 +61,22 @@ public class RoleAdapter extends ArrayAdapter<Role> {
 
     public void doFilter(String query) {
         if (!StringUtilities.isBlank(query)) {
-            if (roles != null && !roles.isEmpty()) {
-                List<Role> newRoles = new ArrayList<>();
+            List<Role> newRoles = RoleDAO.getInstance().findEntitiesByQuery(query);
 
-                for (Role role : roles) {
-                    if (role.getDescription().toUpperCase().contains(query.toUpperCase())) {
-                        newRoles.add(role);
-                    }
-                }
-
-                clear();
-                addAll(newRoles);
-
-                notifyDataSetChanged();
+            if (roles == null) {
+                roles = new ArrayList<>();
             }
+
+            clear();
+            addAll(newRoles);
+
+            notifyDataSetChanged();
         }
+    }
+
+    public void refreshAll() {
+        clear();
+        addAll(RoleDAO.getInstance().findAllEntities());
+        notifyDataSetChanged();
     }
 }

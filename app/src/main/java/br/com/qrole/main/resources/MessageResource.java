@@ -1,5 +1,8 @@
 package br.com.qrole.main.resources;
 
+import android.content.Context;
+import android.content.res.Resources;
+
 import java.io.Serializable;
 
 import br.com.qrole.main.view.activities.LoginActivity;
@@ -15,8 +18,10 @@ public class MessageResource implements Serializable {
 
     private String message;
 
+    public static Resources resources;
+
     public MessageResource(int resourceId) {
-        this(LoginActivity.resources.getString(resourceId));
+        this(resources.getString(resourceId));
     }
 
     public MessageResource(String resource) {

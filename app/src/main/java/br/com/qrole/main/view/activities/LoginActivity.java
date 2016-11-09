@@ -11,18 +11,11 @@ import android.widget.Toast;
 
 import br.com.qrole.main.R;
 import br.com.qrole.main.controller.LoginController;
+import br.com.qrole.main.resources.MessageResource;
 import br.com.qrole.main.utilities.DefaultExceptionHandler;
 import br.com.qrole.main.utilities.StringUtilities;
 
 public class LoginActivity extends AppCompatActivity {
-
-    /**
-     * Resources used by another classes that may have need to access string resources and do not
-     * inherit a Context.
-     *
-     * @see br.com.qrole.main.resources.MessageResource
-     */
-    public static Resources resources;
 
     private static final int REQUEST_PICK_ACCOUNT = 1;
 
@@ -31,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        resources = getResources();
+        MessageResource.resources = getResources();
 
         pickUserAccount();
         init();
