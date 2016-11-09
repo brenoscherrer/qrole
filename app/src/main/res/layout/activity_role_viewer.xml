@@ -20,7 +20,7 @@
         android:id="@+id/textRoleTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageRole"
+        android:layout_above="@+id/buttonConfirmarPresenca"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="4dp"
@@ -112,5 +112,16 @@
 
         </RelativeLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/buttonConfirmarPresenca"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignBottom="@+id/imageRole"
+        android:layout_alignStart="@+id/textRoleTitle"
+        android:drawablePadding="5dip"
+        android:drawableRight="@drawable/confirm_icon"
+        android:text="@string/confirmar_presenca"
+        android:textAllCaps="false" />
 
 </RelativeLayout>

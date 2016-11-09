@@ -6,8 +6,10 @@ import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -32,6 +34,8 @@ public class RoleViewerActivity extends AppCompatActivity {
 
     private ImageView imageRole;
 
+    private Button buttonConfirmarPresenca;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,15 @@ public class RoleViewerActivity extends AppCompatActivity {
         textAddress = (TextView) findViewById(R.id.textAddress);
         textDescription = (TextView) findViewById(R.id.textDescription);
         imageRole = (ImageView) findViewById(R.id.imageRole);
+        buttonConfirmarPresenca = (Button) findViewById(R.id.buttonConfirmarPresenca);
+
+        buttonConfirmarPresenca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(RoleViewerActivity.this, "Presença confirmada com sucesso!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Intent intent = getIntent();
 

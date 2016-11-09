@@ -15,4 +15,5 @@
     <string name="textViewRoleDateTime">Data do Rolê</string>
     <string name="textViewAddress">Endereço</string>
     <string name="textViewDescription">Descrição</string>
+    <string name="confirmar_presenca">Confirmar Presença</string>
 </resources>
