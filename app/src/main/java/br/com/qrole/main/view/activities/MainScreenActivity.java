@@ -2,6 +2,7 @@ package br.com.qrole.main.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -26,6 +27,8 @@ import br.com.qrole.main.view.adapter.RoleAdapter;
 public class MainScreenActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private RoleAdapter roleAdapter;
+    private Handler mHandler;
+    private String searchTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +89,20 @@ public class MainScreenActivity extends AppCompatActivity implements SearchView.
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        roleAdapter.doFilter(query);
-
-        return true;
+        return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return false;
+        searchTerm = newText;
+        mHandler.removeCallbacksAndMessages(null);
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                roleAdapter.doFilter(searchTerm);
+            }
+        }, 300);
+        return true;
     }
 }
