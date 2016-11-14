@@ -2,6 +2,7 @@ package br.com.qrole.main.view.adapter;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import br.com.qrole.main.R;
 import br.com.qrole.main.dao.RoleDAO;
 import br.com.qrole.main.entities.Role;
 import br.com.qrole.main.utilities.BitmapUtilities;
+import br.com.qrole.main.utilities.DefaultExceptionHandler;
 import br.com.qrole.main.utilities.StringUtilities;
 import br.com.qrole.main.view.activities.LoginActivity;
 
@@ -59,24 +61,55 @@ public class RoleAdapter extends ArrayAdapter<Role> {
         return view;
     }
 
-    public void doFilter(String query) {
+    public void doFilter(final String query) {
         if (!StringUtilities.isBlank(query)) {
-            List<Role> newRoles = RoleDAO.getInstance().findEntitiesByQuery(query);
+            try {
+                RoleDAO.BuscaRolesTask task = (RoleDAO.BuscaRolesTask) RoleDAO.getInstance()
+                        .findAllEntities(context, new RoleDAO.BuscaRolesTask.AsyncResponse() {
+                            @Override
+                            public void processFinish(List<Role> output) {
 
-            if (roles == null) {
-                roles = new ArrayList<>();
+                                List<Role> newRoles = new ArrayList<Role>();
+
+                                if (roles == null) {
+                                    roles = new ArrayList<>();
+                                }
+
+                                for (Role r : output) {
+                                    if (r.getDescription().toUpperCase().contains(query.toUpperCase())
+                                            || r.getTitle().toUpperCase().contains(query.toUpperCase())) {
+                                        newRoles.add(r);
+                                    }
+                                }
+
+                                clear();
+                                addAll(newRoles);
+
+                                notifyDataSetChanged();
+                            }
+                        });
+
+                task.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            clear();
-            addAll(newRoles);
-
-            notifyDataSetChanged();
         }
     }
 
     public void refreshAll() {
         clear();
-        addAll(RoleDAO.getInstance().findAllEntities());
-        notifyDataSetChanged();
+        try {
+            RoleDAO.BuscaRolesTask task = (RoleDAO.BuscaRolesTask) RoleDAO.getInstance().findAllEntities(context, new RoleDAO.BuscaRolesTask.AsyncResponse() {
+                @Override
+                public void processFinish(List<Role> output) {
+                    addAll(output);
+                    notifyDataSetChanged();
+                }
+            });
+
+            task.execute();
+        } catch (Exception e) {
+            DefaultExceptionHandler.handleException(e, context);
+        }
     }
 }

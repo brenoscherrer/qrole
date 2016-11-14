@@ -13,16 +13,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.qrole.main.R;
 import br.com.qrole.main.dao.RoleDAO;
 import br.com.qrole.main.entities.Role;
 import br.com.qrole.main.resources.MessageResource;
+import br.com.qrole.main.utilities.DefaultExceptionHandler;
 import br.com.qrole.main.view.adapter.RoleAdapter;
 
 public class MainScreenActivity extends AppCompatActivity
@@ -60,12 +65,27 @@ public class MainScreenActivity extends AppCompatActivity
         // Sobrescrevo o resources existente pois a LoginActivity morre assim que finaliza
         MessageResource.resources = getResources();
 
-        ListView listView = (ListView) findViewById(R.id.list_role);
+        mHandler = new Handler();
+
+        final ListView listView = (ListView) findViewById(R.id.list_role);
         listView.setEmptyView(findViewById(R.id.empty_view_role));
 
-        roleAdapter = new RoleAdapter(this, RoleDAO.getInstance().findAllEntities());
-
+        roleAdapter = new RoleAdapter(MainScreenActivity.this, new ArrayList<Role>());
         listView.setAdapter(roleAdapter);
+
+        try {
+            RoleDAO.BuscaRolesTask task = (RoleDAO.BuscaRolesTask) RoleDAO.getInstance()
+                    .findAllEntities(this, new RoleDAO.BuscaRolesTask.AsyncResponse() {
+                        @Override
+                        public void processFinish(List<Role> output) {
+                            roleAdapter.addAll(output);
+                        }
+                    });
+
+            task.execute();
+        } catch (Exception e) {
+            DefaultExceptionHandler.handleException(e, this);
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,8 +101,6 @@ public class MainScreenActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-        mHandler = new Handler();
     }
 
     @Override

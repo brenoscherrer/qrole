@@ -1,10 +1,35 @@
 package br.com.qrole.main.dao;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import br.com.qrole.main.entities.Role;
+import br.com.qrole.main.utilities.DefaultExceptionHandler;
+import br.com.qrole.main.view.activities.RoleViewerActivity;
+import br.com.qrole.main.view.adapter.RoleAdapter;
 
 /**
  * Role DAO class.
@@ -27,28 +52,31 @@ public class RoleDAO implements AbstractEntityDAO<Role> {
     }
 
     @Override
-    public List<Role> findAllEntities() {
-        return buildSomeFakeRoles();
+    public AsyncTask findAllEntities(Context context, BuscaRolesTask.AsyncResponse delegate)
+            throws Exception {
+
+        return new BuscaRolesTask(context, delegate);
     }
 
     @Override
-    public Role findEntityByID(int ID) {
+    public Role findEntityByID(Context context, int ID) throws Exception {
         return null;
     }
 
     @Override
-    public List<Role> findEntitiesByQuery(String query) {
+    public List<Role> findEntitiesByQuery(Context context, String query) throws Exception {
 
-        List<Role> roles = new ArrayList<>();
+        // Não funciona mais, movido para o doFilter do RoleAdapter
+//        List<Role> roles = new ArrayList<>();
+//
+//        for (Role r : findAllEntities(context)) {
+//            if (r.getDescription().toUpperCase().contains(query.toUpperCase())
+//                    || r.getTitle().toUpperCase().contains(query.toUpperCase())) {
+//                roles.add(r);
+//            }
+//        }
 
-        for (Role r : findAllEntities()) {
-            if (r.getDescription().toUpperCase().contains(query.toUpperCase())
-                    || r.getTitle().toUpperCase().contains(query.toUpperCase())) {
-                roles.add(r);
-            }
-        }
-
-        return roles;
+        return null;
     }
 
     // Método auxiliar para criar Roles para teste
@@ -80,5 +108,91 @@ public class RoleDAO implements AbstractEntityDAO<Role> {
         }
 
         return roles;
+    }
+
+    public static class BuscaRolesTask extends AsyncTask<String, Void, List<Role>> {
+
+        // you may separate this or combined to caller class.
+        public interface AsyncResponse {
+            void processFinish(List<Role> output);
+        }
+
+        public AsyncResponse delegate = null;
+
+        private ProgressDialog progressDialog;
+
+        private Context context;
+
+        public BuscaRolesTask(Context context, AsyncResponse delegate) {
+            this.context = context;
+            this.delegate = delegate;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Log.v("breno", "onPre");
+
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage("Buscando...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
+
+        @Override
+        protected List<Role> doInBackground(String... params) {
+            List<Role> roles = null;
+            try {
+                HttpURLConnection connection = (HttpURLConnection) new URL(
+                        "http://" + IP_SERVER + "/qrole-server/webresources/role").openConnection();
+                connection.connect();
+
+                int statusCode = connection.getResponseCode();
+                if (statusCode != HttpURLConnection.HTTP_OK) {
+                    return null;
+                }
+
+                InputStream in = new BufferedInputStream(
+                        connection.getInputStream());
+
+                Reader reader = new InputStreamReader(in);
+                Gson gson = new Gson();
+
+                Type listType = new TypeToken<ArrayList<Role>>() {
+                }.getType();
+
+                roles = gson.fromJson(reader, listType);
+
+                in.close();
+            } catch (Exception ex) {
+                Log.v("breno", "ex=" + ex.getMessage());
+                DefaultExceptionHandler.handleException(ex, context);
+            }
+            Log.v("breno", "fim do doInB");
+
+            return roles;
+        }
+
+        @Override
+        protected void onPostExecute(List<Role> roles) {
+            super.onPostExecute(roles);
+            progressDialog.dismiss();
+
+            if (roles != null) {
+                delegate.processFinish(roles);
+            } else {
+                AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setMessage("Não foi possível obter os rolês do Servidor.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }).create();
+
+                dialog.show();
+            }
+        }
     }
 }

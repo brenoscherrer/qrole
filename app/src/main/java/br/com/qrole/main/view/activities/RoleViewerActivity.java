@@ -75,6 +75,8 @@ public class RoleViewerActivity extends AppCompatActivity {
         textAddress.setText(role.getAddress());
         textDescription.setText(role.getDescription());
 
+        setTitle(role.getTitle());
+
         if (StringUtilities.isBlank(role.getImage())) {
             imageRole.setImageDrawable(getResources().getDrawable(R.drawable.noimage, null));
         } else {
