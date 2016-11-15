@@ -13,11 +13,18 @@
     tools:showIn="@layout/app_bar_main"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="horizontal" />
+
     <ListView
         android:id="@+id/list_role"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:layout_weight="0.5" />
 
     <TextView
         android:id="@+id/empty_view_role"
