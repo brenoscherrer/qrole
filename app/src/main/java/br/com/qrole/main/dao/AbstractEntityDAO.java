@@ -17,7 +17,7 @@ public interface AbstractEntityDAO<T extends Entity> {
     /**
      * Server IP.
      */
-    String IP_SERVER = "10.0.2.2:8080";
+    String IP_SERVER = "25.47.185.72:8080";
 
     AsyncTask findAllEntities(Context context, RoleDAO.BuscaRolesTask.AsyncResponse delegate) throws Exception;
 
